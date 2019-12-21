@@ -1,0 +1,240 @@
+#include <L298N.h>
+
+//pin definition
+#define ENA 9
+#define IN1 8
+#define IN2 7
+#define ENB 10
+#define IN3 2
+#define IN4 4
+#define IR1 12
+#define IR2 11
+#define IR3 6
+//now
+#define IR4 3
+#define IR5 5
+#define IR6 13
+//create a motor instance
+L298N motor(ENA, IN1, IN2);
+L298N motor2(ENB, IN3, IN4);
+
+bool UR;
+bool UL;
+bool LL;
+bool Right;
+bool Left;
+bool Down;
+//int R;
+
+   
+void setup() {
+
+  //used for display information
+  Serial.begin(9600);
+
+  motor.setSpeed(255); // an integer between 0 and 255
+  motor2.setSpeed(255);
+
+
+}
+
+
+  
+void loop() {
+    UR = !digitalRead(IR1);
+    UL = !digitalRead(IR2);
+    LL = !digitalRead(IR3);
+    Right = !digitalRead(IR4);
+    Left = !digitalRead(IR5);
+    Down = !digitalRead(IR6);
+    //R = random(1,3);
+
+   if(UR && !UL){
+    
+    motor.forward();
+    motor2.backward();
+    delay(3500);
+    
+   }
+
+   else if((!UR && UL) || (UR && UL) || LL){
+
+    motor.backward();
+    motor2.forward();
+    delay(3500);
+    
+   }
+
+   else if(Down){
+
+    motor.backward();
+    motor2.backward();
+
+    
+   }
+
+
+   else if(Right){
+
+    motor.stop();
+    motor2.forward();
+
+    delay(3000);
+    
+    
+   }
+
+   else if(Left){
+
+    motor.forward();
+    motor2.stop();
+
+    delay(3000);
+   }
+   
+   
+   /* else if(UR && UL){
+
+    motor.forward();
+    motor2.backward();
+   
+    
+    switch (R){
+
+      case 1:{
+        
+        motor.forward();
+        motor2.backward();
+
+        break;
+      }
+
+      case 2: {
+
+        motor.backward();
+        motor2.forward();
+
+        break;
+      }
+         
+    }
+  
+
+
+}*/
+
+
+   else{
+    
+
+    motor.forward();
+    motor2.forward();
+    
+
+    
+   }
+
+  //tell the motor to go forward (may depend by your wiring)
+  
+
+  //print the motor satus in the serial monitor
+  //Serial.print("Is moving = ");
+  //Serial.println(motor.isMoving());
+
+  /*
+  goAhead();
+  avoidFalling(UR,UL);*/
+ 
+  
+/* Serial.println(digitalRead(12));
+
+  if(!digitalRead(12))
+  {
+    
+    motor.forward();
+    motor2.backward();
+    
+  }else
+  {
+    motor.forward();
+    motor2.forward();
+    
+  }*/
+
+
+  //delay(3000);
+
+  //stop running
+  //motor.stop();
+
+  //Serial.print("Is moving = ");
+  //Serial.println(motor.isMoving());
+
+  //delay(3000);
+
+  //change the initial speed
+  //motor.setSpeed(100);
+
+  //tell the motor to go back (may depend by your wiring)
+  //motor.backward();
+
+  //Serial.print("Is moving = ");
+  //Serial.println(motor.isMoving());
+
+  //delay(3000);
+
+  //stop running
+ // motor.stop();
+
+  //Serial.print("Is moving = ");
+  //Serial.println(motor.isMoving());
+
+  //change the initial speed
+  //motor.setSpeed(255);
+
+  //Serial.print("Get new speed = ");
+  //Serial.println(motor.getSpeed());
+
+  //delay(3000);
+}
+
+
+/*void avoidFalling(bool UR, bool UL){
+
+
+  if(UR && UL){
+
+    motor.backward();
+    motor2.backward();
+    delay(1000);
+    mo
+
+    
+  }
+
+  else if(UR && !UL){
+
+    motor.forward();
+    motor2.backward();
+    delay(1000);
+  }
+
+  else if(!UR && UL){
+
+    motor.backward();
+    motor2.forward();
+    delay(1000)
+  }
+ 
+}
+
+
+void goAhead(){
+
+  motor.forward();
+  motor2.forward();
+ 
+}
+
+*/
+
